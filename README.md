@@ -110,8 +110,10 @@ LegalBert/
 
 ## Demo Images
 
-![NLP Contract Classifier](demo_images/MP_1.png)
-![NLP Contract Classifier](demo_images/MP_7.png)
-![NLP Contract Classifier](demo_images/MP_8.png)
+| | |
+|---|---|
+| ![NLP Contract Classifier](demo_images/MP_1.png) | ![NLP Contract Classifier](demo_images/MP_7.png) |
+| ![NLP Contract Classifier](demo_images/MP_8.png) |  |
+
 
 
