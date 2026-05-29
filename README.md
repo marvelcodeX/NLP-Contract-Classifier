@@ -55,6 +55,12 @@ LegalBert/
 
 ---
 
+## .pt file link
+
+![Download the .pt file from this link](https://drive.google.com/file/d/1jwt0groOQzA9PwItPxF3Zt0J5LDlVGsq/view?usp=sharing)
+
+---
+
 ## 🖥️ Frontend Highlights
 
 ### 📤 File Upload
