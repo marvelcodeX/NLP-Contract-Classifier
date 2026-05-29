@@ -209,6 +209,7 @@ class ContractAnalyzer:
             "total_clauses": len(clauses),
             "clauses_with_labels": sum(c["num_labels"] > 0 for c in analyzed),
             "total_entities": len({(e["text"], e["type"]) for e in all_entities}),
+            "high_importance_clauses": int(sum(c["importance_score"] >= 0.7 for c in analyzed)),
             "unique_categories": len(category_counts),
             "top_categories": sorted(category_counts.items(), key=lambda x: x[1], reverse=True)[:10]
         }

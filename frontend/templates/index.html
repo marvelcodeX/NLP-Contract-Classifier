@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - NLP Legal Entity Extraction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
 </head>
 <body>
     <nav class="navbar">
@@ -14,7 +13,7 @@
                 <span class="logo-text">ArgusAI</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/" class="nav-link active">Home</a></li>
                 <li><a href="{{ url_for('analyze_page') }}" class="nav-link">Analyze</a></li>
 
                 <li><a href="/about" class="nav-link">About</a></li>
@@ -38,17 +37,23 @@ Using advanced NLP techniques and a LegalBERT-based model, it identifies clause 
                 
                 <div class="home-features">
                     <div class="feature-item">
-                        <div class="feature-icon">📄</div>
+                        <div class="feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/><path d="M9 9h1"/></svg>
+                        </div>
                         <h3>Upload Legal Documents</h3>
                         <p>Upload PDF files containing contracts, case files, or any legal text</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">🤖</div>
+                        <div class="feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4"/><path d="M8 4h8"/><path d="M9 13h.01"/><path d="M15 13h.01"/><path d="M9 17h6"/><path d="M3 13v3"/><path d="M21 13v3"/></svg>
+                        </div>
                         <h3>Automatic Analysis</h3>
                         <p>NLP-driven system extracts and classifies contractual clauses and relevant legal entities</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">📊</div>
+                        <div class="feature-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M4 4v15a1 1 0 0 0 1 1h15"/><path d="M8 16h8"/><path d="M8 12h10"/><path d="M8 8h5"/></svg>
+                        </div>
                         <h3>Organized Results</h3>
                         <p>Produces structured clause-level output with legally relevant entities properly classified</p>
                     </div>
@@ -56,8 +61,9 @@ Using advanced NLP techniques and a LegalBERT-based model, it identifies clause 
 
                 <div class="cta-section">
                     <a href="{{ url_for('analyze_page') }}" class="btn-primary btn-large">
-  📄 Analyze Document
-</a>
+                        <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                        Analyze Document
+                    </a>
 
                     <p class="cta-subtext">Start analyzing your legal documents now</p>
                 </div>

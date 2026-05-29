@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultsSummary = document.getElementById('resultsSummary');
   const loadingOverlay = document.getElementById('loadingOverlay');
 
-  console.log('✅ analyze.js loaded');
+  console.log('analyze.js loaded');
 
   if (!pdfInput || !chooseFileBtn || !analyzeBtn) {
-    console.error('❌ Required DOM elements missing');
+    console.error('Required DOM elements missing');
     return;
   }
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadingOverlay.style.display = 'none';
 
       if (!result.success) {
-        alert('Analysis failed');
+        alert(result.error || 'Analysis failed');
         return;
       }
 

@@ -81,22 +81,36 @@ LegalBert/
 
 1. **Create virtual environment**
    ```bash
-   python -m venv venv
-   source venv/bin/activate   # Windows: venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate
     ```
 
 2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
-
    ```
 
-3. **Start the server**
+3. **Add the classifier checkpoint**
+
+   Place the trained model at:
+
+   ```text
+   backend/models/best_legal_classifier.pt
+   ```
+
+   This file is large and should be kept as a local artifact, not committed as a normal Git file.
+
+4. **Start the server**
    ```bash
    cd backend
    python app.py
-
    ```
+
+5. **Open the app**
+
+   Visit `http://127.0.0.1:5500`.
+
+> Entity extraction uses Ollama at `http://localhost:11434` with `phi3:mini`. If Ollama is not running, clause classification still works and entity extraction falls back to an empty list.
 
 ---
 ## 🎯 Use Cases
@@ -108,12 +122,17 @@ LegalBert/
 
 ---
 
+## Contributors
+
+- [Niveditha](https://github.com/marvelcodeX)
+- [Aastha](https://github.com/AasthathecoderX)
+
+---
+
 ## Demo Images
 
 | | |
 |---|---|
-| ![NLP Contract Classifier](demo_images/MP_1.png) | ![NLP Contract Classifier](demo_images/MP_7.png) |
-| ![NLP Contract Classifier](demo_images/MP_8.png) |  
-
-
+| ![NLP Contract Classifier](demo_images/MP_1.png) | ![NLP Contract Classifier](demo_images/MP_4.png) |
+| ![NLP Contract Classifier](demo_images/MP_2.png) | ![NLP Contract Classifier](demo_images/MP_3.png) |
 

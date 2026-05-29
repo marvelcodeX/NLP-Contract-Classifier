@@ -1,0 +1,7 @@
+Flask
+flask-cors
+PyPDF2
+requests
+numpy
+torch
+transformers

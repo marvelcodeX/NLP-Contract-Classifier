@@ -6,6 +6,7 @@ File: backend/app.py
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import os
+import json
 from werkzeug.utils import secure_filename
 
 from utils.inference import LegalNLPInferenceAPI
@@ -34,14 +35,49 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # ---------------- MODEL INIT ----------------
 print("🔥 Loading Legal NLP models...")
-api = LegalNLPInferenceAPI(
-    model_path="models/best_legal_classifier.pt",
-    config_path="models/model_config.json",
-    device="cpu",  # change to 'cuda' if available
-)
-print("✅ Models loaded successfully!")
+MODEL_LOAD_ERROR = None
+MODEL_CONFIG_PATH = "models/model_config.json"
+MODEL_PATH = "models/best_legal_classifier.pt"
+
+def checkpoint_is_lfs_pointer(path):
+    try:
+        with open(path, "rb") as f:
+            return f.read(80).startswith(b"version https://git-lfs.github.com/spec/v1")
+    except OSError:
+        return False
+
+try:
+    if checkpoint_is_lfs_pointer(MODEL_PATH):
+        raise RuntimeError(
+            f"{MODEL_PATH} is a Git LFS pointer, not the real checkpoint file."
+        )
+
+    api = LegalNLPInferenceAPI(
+        model_path=MODEL_PATH,
+        config_path=MODEL_CONFIG_PATH,
+        device="cpu",  # change to 'cuda' if available
+    )
+    model_config = api.config
+    print("✅ Models loaded successfully!")
+except Exception as exc:
+    api = None
+    MODEL_LOAD_ERROR = str(exc)
+    with open(MODEL_CONFIG_PATH, "r", encoding="utf-8") as f:
+        model_config = json.load(f)
+    print(f"⚠️ Model unavailable: {MODEL_LOAD_ERROR}")
 
 pdf_extractor = PDFTextExtractor()
+
+def require_model():
+    if api is not None:
+        return None
+    return jsonify(
+        {
+            "success": False,
+            "error": "Model is unavailable. Restore backend/models/best_legal_classifier.pt with the real checkpoint file.",
+            "details": MODEL_LOAD_ERROR,
+        }
+    ), 503
 
 # ---------------- HELPERS ----------------
 def allowed_file(filename: str) -> bool:
@@ -75,14 +111,19 @@ def health_check():
     return jsonify(
         {
             "status": "healthy",
-            "model_loaded": True,
-            "categories": len(api.config["categories"]),
+            "model_loaded": api is not None,
+            "model_error": MODEL_LOAD_ERROR,
+            "categories": len(model_config["categories"]),
         }
     )
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze_contract():
     try:
+        unavailable = require_model()
+        if unavailable:
+            return unavailable
+
         contract_text = None
 
         # Option 1: File upload
@@ -132,6 +173,10 @@ def analyze_contract():
 @app.route("/api/classify-clause", methods=["POST"])
 def classify_clause():
     try:
+        unavailable = require_model()
+        if unavailable:
+            return unavailable
+
         data = request.get_json()
         if not data or "text" not in data:
             return jsonify({"error": "No text provided"}), 400
@@ -147,6 +192,10 @@ def classify_clause():
 @app.route("/api/extract-entities", methods=["POST"])
 def extract_entities():
     try:
+        unavailable = require_model()
+        if unavailable:
+            return unavailable
+
         data = request.get_json()
         if not data or "text" not in data:
             return jsonify({"error": "No text provided"}), 400
@@ -162,8 +211,8 @@ def get_categories():
     return jsonify(
         {
             "success": True,
-            "categories": api.config["categories"],
-            "total": len(api.config["categories"]),
+            "categories": model_config["categories"],
+            "total": len(model_config["categories"]),
         }
     )
 
@@ -172,8 +221,8 @@ if __name__ == "__main__":
     print("\n" + "=" * 80)
     print("🚀 LEGAL NLP FLASK API")
     print("=" * 80)
-    print(f"📋 Categories: {len(api.config['categories'])}")
-    print("🤖 Model: LegalBERT")
+    print(f"📋 Categories: {len(model_config['categories'])}")
+    print(f"🤖 Model: {'LegalBERT' if api is not None else 'unavailable'}")
     print("=" * 80)
 
-    app.run(host="0.0.0.0", port=5500, debug=True)
+    app.run(host="127.0.0.1", port=5500, debug=False, use_reloader=False)

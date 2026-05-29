@@ -1,60 +1,79 @@
-# macOS
-.DS_Store
-
-# Python bytecode and caches
+# =========================
+# Python
+# =========================
 __pycache__/
 *.py[cod]
-*$py.class
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
 
-# Virtual environments
-.venv/
+# =========================
+# Virtual Environment
+# =========================
 venv/
-env/
-ENV/
-
-# Environment and local configuration
+.venv
 .env
 .env.*
-!.env.example
-*.local
 
-# Flask/runtime files
+# =========================
+# Flask / Runtime
+# =========================
 instance/
 *.log
-logs/
 
-# Generated user files
+# =========================
+# Uploaded Files (PDFs, temp)
+# =========================
 uploads/
-downloads/
-outputs/
-tmp/
-temp/
+uploads/*.pdf
+uploads/*.txt
 
-# Jupyter notebooks
-.ipynb_checkpoints/
+# =========================
+# ML Models (Large files)
+# =========================
+backend/models/*.pt
+backend/models/*.bin
+backend/models/*.safetensors
+backend/models/*.ckpt
+!backend/models/model_config.json
 
-# IDE/editor files
+# =========================
+# HuggingFace / Transformers Cache
+# =========================
+.cache/
+huggingface/
+hf_cache/
+
+# =========================
+# Ollama / Local LLM cache
+# =========================
+.ollama/
+ollama/
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+
+# VS Code
 .vscode/
+*.code-workspace
+
+# PyCharm
 .idea/
-*.swp
-*.swo
 
-# Node/frontend dependencies and build outputs
-node_modules/
-dist/
+# =========================
+# Build / Distribution
+# =========================
 build/
-.parcel-cache/
-.vite/
+dist/
 
-# Model training artifacts and experiment logs
-runs/
-wandb/
-mlruns/
-checkpoints/
-*.ckpt
-
+# =========================
+# Frontend Build Artifacts (if added later)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
