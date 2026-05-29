@@ -133,6 +133,6 @@ LegalBert/
 
 | | |
 |---|---|
-| ![NLP Contract Classifier](demo_images/MP_1.png) | ![NLP Contract Classifier](demo_images/MP_4.png) |
-| ![NLP Contract Classifier](demo_images/MP_2.png) | ![NLP Contract Classifier](demo_images/MP_3.png) |
+| ![NLP Contract Classifier](demo_images/MP_1.png) | ![NLP Contract Classifier](demo_images/MP_2.png) |
+| ![NLP Contract Classifier](demo_images/MP_4.png) | ![NLP Contract Classifier](demo_images/MP_3.png) |
 
